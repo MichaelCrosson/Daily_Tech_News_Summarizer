@@ -8,7 +8,7 @@ import ssl
 import os
 import time
 load_dotenv()
-openai.api_key = os.getenv("openai.api_key")
+openai.api_key = os.getenv("OPENAI")
 
 # Scrape inital links 
 def scrape_links(url, xpath, selector):
