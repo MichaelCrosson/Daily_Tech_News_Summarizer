@@ -213,7 +213,7 @@ def complete_missing_fields(row):
     # If 'Title' is missing, generate a title based on the text
     if (title == "N/A" or pd.isna(title) or title == "") and not (text == "N/A" or text == "No article." or pd.isna(text) or text == ""):
       try:
-        content = f"Generate a suitable title for the following article: {text}"
+        content = f"Generate a suitable title for the following tech article: {text}"
         completion = openai.chat.completions.create(
            messages=[
                {
@@ -224,17 +224,17 @@ def complete_missing_fields(row):
            model="gpt-3.5-turbo",
            )
            
-        titler = "Generated: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' '))
+        titler = str("Generated: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' ')))
         row['Title'] = titler
       except Exception as e:
             print(f"Error generating title: {e}")
 
     # If 'Text' is missing, generate the content based on the title
     if (text == "N/A" or text == "No article." or pd.isna(text) or text == "") and not (title == "N/A" or pd.isna(title) or title == ""):
-        content = f"Generate an article for the following title using the best and latest data you know: {title}"
+        content = f"Generate a summation of an article in {sen_num} sentences for the following title using the best and latest data you know: {title}"
         try:
           completion = openai.chat.completions.create(
-          messages=[
+          messages=[ 
                {
                    "role": "user",
                    "content": content,
@@ -243,7 +243,7 @@ def complete_missing_fields(row):
           model="gpt-3.5-turbo",
           )
 
-          textr = "Generated: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' '))
+          textr = str("Generated: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' ')))
           row['Text'] = textr
         except Exception as e:
             print(f"Error generating text: {e}")
