@@ -211,10 +211,35 @@ date = datetime.now().strftime("%d-%m-%Y")
 subscriber_email_addresses = ['nossorc2@gmail.com']
 news_summaries = df
 
-html_content = f"<html><body><h1>Daily Tech News - {date}</h1><ul>"
-for _, row in news_summaries.iterrows():
-    html_content += f"<li><h3>{row['Title']}</h3><p>{row['Text']}</p><a href='{row['Link']}'>Read more</a><i>Source: {row['Origin']}</i></li><hr>"
-html_content += "</ul></body></html>"
+# Build the newsletter HTML content
+html_content = f'''
+<html>
+<head></head>
+<body>
+    <h1>Daily Tech News - {date}</h1>
+    <p>Brought to you by <b>Mitch</b></p>
+    <hr>
+    <ul>
+'''
+
+# Loop through each news item and add it to the HTML content
+for index, row in news_summaries.iterrows():
+    html_content += f'''
+    <li>
+        <h3>{row['Title']}</h3>
+        <p>{row['Text']}</p>
+        <p><a href="{row['Link']}">Read more</a></p>
+        <p><i>Source: {row['Origin']}</i></p>
+    </li>
+    <hr>
+    '''
+
+# Close the HTML content
+html_content += '''
+    </ul>
+</body>
+</html>
+'''
 
 def send_email(to_address, content):
     email = EmailMessage()
