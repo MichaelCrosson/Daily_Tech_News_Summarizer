@@ -5,6 +5,7 @@ on:
     # Send the newsletter daily at 6:30 am.
     - cron: '30 6 * * *'
   workflow_dispatch:
+
 jobs:
   Query-And-Notification:
     runs-on: ubuntu-latest
@@ -14,27 +15,17 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: 3.9
-      - name: Installing package list
-        run: apt list --installed    
-      - name: Removing previous Chrome instances on runner 
-        run: sudo apt purge google-chrome-stable  
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install python-dotenv
-          python -m pip install pandas
-          python -m pip install openai
-          python -m pip install selenium
-      - name: Installing all necessary packages
-        run: pip install chromedriver-autoinstaller selenium pyvirtualdisplay
-      - name: Install xvfb
-        run: sudo apt-get install xvfb
+          pip install python-dotenv pandas openai selenium chromedriver-autoinstaller pyvirtualdisplay
+
       - name: Send the newsletter to the subscribers
         env:
           GMAIL_USERNAME: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        
         run: |
           python news_summarizer.py
           python newsletter.py
