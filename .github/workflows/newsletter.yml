@@ -27,6 +27,6 @@ jobs:
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          echo ${ secrets.GMAIL_ADDRESS: -4}
-          echo ${ secrets.GMAIL_PASSWORD: -4}
+          echo "${ secrets.GMAIL_ADDRESS: -4}"
+          echo "${ secrets.GMAIL_PASSWORD: -4}"
           python newsletter.py
