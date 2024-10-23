@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install python-dotenv pandas openai selenium chromedriver-autoinstaller pyvirtualdisplay
+          pip install python-dotenv pandas openai selenium chromedriver-autoinstaller pyvirtualdisplay email
 
       - name: Send the newsletter to the subscribers
         env:
@@ -27,5 +27,4 @@ jobs:
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          python news_summarizer.py
           python newsletter.py
