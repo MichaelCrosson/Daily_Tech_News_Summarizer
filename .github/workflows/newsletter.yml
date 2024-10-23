@@ -33,7 +33,7 @@ jobs:
         env:
           GMAIL_USERNAME: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
-          openai.api_key: ${{ secrets.OPENAI.API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI.API_KEY }}
 
         run: |
           python news_summarizer.py
