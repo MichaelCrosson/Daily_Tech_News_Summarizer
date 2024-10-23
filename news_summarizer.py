@@ -112,13 +112,13 @@ def summarize(pairs, sen_num):
     summaries = []
     for i in pairs:
         content = f"""
-        Sumarize the following information in a TL:DR format with at least {sen_num} sentences 
-        for easier cosumption. Do not include the term TL:DR in the final output. 
+        Summarize the following information in a TL:DR format with at least {sen_num} sentences 
+        for easier consumption. Do not include the term TL:DR in the final output. 
         If nothing is given simply reply with "No article".
-        Do not repeat the title of the text. Fix all grammaer and syntax errors from the input if applicable.
+        Do not repeat the title of the text. Fix all grammar and syntax errors from the input if applicable.
         Capture key points, interesting facts, and figures used in this article:
         title: {i[0]}
-        aritcle: {i[1]}
+        article: {i[1]}
         """
 
         completion = openai.chat.completions.create(
@@ -244,7 +244,7 @@ html_content += '''
 def send_email(to_address, content):
     email = EmailMessage()
     email["Subject"] = f"{date} - Daily Dose of {term} News"
-    email["From"] = gmail_address
+    email["From"] = f"Daily {term} News"
     email["To"] = to_address
     email.add_alternative(content, subtype='html')
     smtp_server.send_message(email)
