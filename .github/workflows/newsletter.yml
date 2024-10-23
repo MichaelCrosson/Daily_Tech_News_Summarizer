@@ -37,6 +37,8 @@ jobs:
           
 
         run: |
+          echo environment
+          echo "hello"
           echo "OpenAI API Key (masked): ${OPENAI_API_KEY: -4}"
           python news_summarizer.py
           python newsletter.py
