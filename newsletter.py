@@ -2,7 +2,7 @@ import smtplib
 import ssl
 import os
 import pandas as pd
-from email import EmailMessage
+from email.message import EmailMessage
 from dotenv import load_dotenv
 from datetime import datetime
 
