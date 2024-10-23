@@ -29,4 +29,6 @@ jobs:
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
+          echo ${{ secrets.GMAIL_ADDRESS }}
+          echo ${{ secrets.GMAIL_PASSWORD }}
           pipenv run python newsletter.py
