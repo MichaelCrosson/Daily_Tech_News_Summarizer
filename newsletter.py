@@ -3,23 +3,21 @@ import ssl
 import os
 import pandas as pd
 from email.message import EmailMessage
-from dotenv import load_dotenv
 from datetime import datetime
+
+# Get the Gmail credentials from GitHub Secrets (environment variables)
+gmail_address = os.getenv("GMAIL_ADDRESS")
+gmail_password = os.getenv("GMAIL_PASSWORD")
+
+# Ensure that the credentials are loaded properly
+assert gmail_address, "GMAIL_ADDRESS environment secret not loaded"
+assert gmail_password, "GMAIL_PASSWORD environment secret not loaded"
 
 # Load CSV file with news summaries
 news_summaries = pd.read_csv('newssummaries.csv')
 
 # Get the current date
 date = datetime.now().strftime("%d-%m-%Y")
-
-# Load environment variables for email credentials
-load_dotenv()
-gmail_address = os.getenv("GMAIL_ADDRESS")
-gmail_password = os.getenv("GMAIL_PASSWORD")
-
-# Ensure that the credentials are loaded properly
-assert gmail_address, "GMAIL_ADDRESS environment variable not loaded"
-assert gmail_password, "GMAIL_PASSWORD environment variable not loaded"
 
 # List of subscribers
 subscriber_email_addresses = ['nossorc2@gmail.com']  # Add more email addresses as needed
