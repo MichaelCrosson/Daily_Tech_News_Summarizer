@@ -15,7 +15,7 @@ display = Display(visible=0, size=(800, 800))
 display.start()
 
 load_dotenv()
-openai.api_key = os.getenv("OPENAI")
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 chromedriver_autoinstaller.install()
 chrome_options = webdriver.ChromeOptions()  
