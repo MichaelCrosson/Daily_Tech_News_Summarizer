@@ -211,7 +211,7 @@ def complete_missing_fields(row):
         return row
 
     # If 'Title' is missing, generate a title based on the text
-    if (title == "N/A" or pd.isna(title) or title == "") and not (text == "N/A" or text == "No article" or pd.isna(text) or text == ""):
+    if (title == "N/A" or pd.isna(title) or title == "") and not (text == "N/A" or text == "No article." or pd.isna(text) or text == ""):
       try:
         content = f"Generate a suitable title for the following article: {text}"
         completion = openai.chat.completions.create(
@@ -230,7 +230,7 @@ def complete_missing_fields(row):
             print(f"Error generating title: {e}")
 
     # If 'Text' is missing, generate the content based on the title
-    if (text == "N/A" or text == "No article" or pd.isna(text) or text == "") and not (title == "N/A" or pd.isna(title) or title == ""):
+    if (text == "N/A" or text == "No article." or pd.isna(text) or text == "") and not (title == "N/A" or pd.isna(title) or title == ""):
         content = f"Generate an article for the following title using the best and latest data you know: {title}"
         try:
           completion = openai.chat.completions.create(
