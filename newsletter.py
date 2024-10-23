@@ -6,6 +6,7 @@ from email.message import EmailMessage
 from datetime import datetime
 
 # Get the Gmail credentials from GitHub Secrets (environment variables)
+load_dotenv()
 gmail_address = os.getenv("GMAIL_ADDRESS")
 gmail_password = os.getenv("GMAIL_PASSWORD")
 
