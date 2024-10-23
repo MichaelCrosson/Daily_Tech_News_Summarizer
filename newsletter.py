@@ -1,5 +1,6 @@
 import smtplib
 import ssl
+from dotenv import load_dotenv
 import os
 import pandas as pd
 from email.message import EmailMessage
