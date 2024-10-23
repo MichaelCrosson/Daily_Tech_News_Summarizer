@@ -21,6 +21,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install python-dotenv pandas openai selenium chromedriver-autoinstaller pyvirtualdisplay pipenv
           pipenv install
+          pipenv install python-dotenv pandas openai selenium chromedriver-autoinstaller pyvirtualdisplay
 
       - name: Send the newsletter to the subscribers
         env:
