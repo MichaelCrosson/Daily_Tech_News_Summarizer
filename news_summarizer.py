@@ -268,7 +268,7 @@ html_content = f'''
 <head></head>
 <body>
     <h1>Daily {term} News - {date}</h1>
-    <p>Brought to you by <b>Mitch</b></p>
+    <p>Brought to you by <b><a href="michaelcrosson.github.io/">Michael Crosson</a></b></p>
     <hr>
     <ul>
 '''
