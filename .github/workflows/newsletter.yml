@@ -30,7 +30,7 @@ jobs:
       - name: Install xvfb
         run: sudo apt-get install xvfb
       - name: Send the newsletter to the subscribers
-        env:
+        environment: news
           GMAIL_USERNAME: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
           OPENAI_API_KEY: ${{ secrets.OPENAI.API_KEY }}
