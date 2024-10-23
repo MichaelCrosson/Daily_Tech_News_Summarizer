@@ -1,19 +1,35 @@
 import pandas as pd
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 import openai
 from dotenv import load_dotenv
 import smtplib
 import ssl
 import os
 import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+import chromedriver_autoinstaller
+from pyvirtualdisplay import Display
+display = Display(visible=0, size=(800, 800))  
+display.start()
+
 load_dotenv()
 openai.api_key = os.getenv("OPENAI")
 
+chromedriver_autoinstaller.install()
+chrome_options = webdriver.ChromeOptions()  
+options = [
+   "--window-size=1200,1200",
+    "--ignore-certificate-errors"
+
+for option in options:
+    chrome_options.add_argument(option)
+    
 # Scrape inital links 
 def scrape_links(url, xpath, selector):
     url = url
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options = chrome_options)
     try:
       driver.get(url)
     except: 
@@ -40,7 +56,7 @@ def scrape_links(url, xpath, selector):
 def scrape_articles(links, xpath_title, xpath_text, selector, origin):
   pairs = []
   m = 0
-  driver = webdriver.Chrome()
+  driver = webdriver.Chrome(options = chrome_options)
   for i in list(links):
     try: 
       driver.get(i)
