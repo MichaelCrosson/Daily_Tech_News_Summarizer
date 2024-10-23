@@ -17,11 +17,15 @@ load_dotenv()
 gmail_address = os.getenv("GMAIL_ADDRESS")
 gmail_password = os.getenv("GMAIL_PASSWORD")
 
+# Ensure that the credentials are loaded properly
+assert gmail_address, "GMAIL_ADDRESS environment variable not loaded"
+assert gmail_password, "GMAIL_PASSWORD environment variable not loaded"
+
 # List of subscribers
 subscriber_email_addresses = ['nossorc2@gmail.com']  # Add more email addresses as needed
 
 # Build the newsletter HTML content
-html_content = '''
+html_content = f'''
 <html>
 <head></head>
 <body>
@@ -29,7 +33,7 @@ html_content = '''
     <p>Brought to you by <b>Mitch</b></p>
     <hr>
     <ul>
-'''.format(date=date)
+'''
 
 # Loop through each news item and add it to the HTML content
 for index, row in news_summaries.iterrows():
@@ -53,21 +57,42 @@ html_content += '''
 # Set up the secure SSL context
 context = ssl.create_default_context()
 
-# Send the email to each subscriber
-with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp_server:
-    smtp_server.login(gmail_address, gmail_password)
-    
-    for subscriber_email in subscriber_email_addresses:
+# Function to send email
+def send_email(to_address, content):
+    try:
         # Create a new email message for each recipient
         email = EmailMessage()
         email["Subject"] = f"{date} - Daily Dose of Tech News"
         email["From"] = gmail_address
-        email["To"] = subscriber_email
-        
+        email["To"] = to_address
+
         # Add the HTML content to the email
-        email.add_alternative(html_content, subtype='html')
-        
+        email.add_alternative(content, subtype='html')
+
         # Send the email
         smtp_server.send_message(email)
+        print(f"Newsletter sent to {to_address}")
+    except Exception as e:
+        print(f"Failed to send email to {to_address}: {e}")
 
-print("Newsletter sent successfully!")
+# Send the email to each subscriber
+try:
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp_server:
+        # Attempt to login with the provided credentials
+        try:
+            smtp_server.login(gmail_address, gmail_password)
+            print("Login successful.")
+        except smtplib.SMTPAuthenticationError as auth_error:
+            print(f"SMTP Authentication error: {auth_error}")
+            exit(1)
+        except Exception as login_error:
+            print(f"Login failed: {login_error}")
+            exit(1)
+
+        # Send emails to each subscriber
+        for subscriber_email in subscriber_email_addresses:
+            send_email(subscriber_email, html_content)
+except Exception as e:
+    print(f"An error occurred: {e}")
+
+print("Newsletter sending process completed.")
