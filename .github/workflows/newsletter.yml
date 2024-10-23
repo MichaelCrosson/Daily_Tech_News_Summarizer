@@ -8,7 +8,7 @@ on:
 jobs:
   Query-And-Notification:
     runs-on: ubuntu-latest
-
+    environment: news
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
