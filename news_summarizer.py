@@ -1,16 +1,26 @@
+import os
+import time
 import pandas as pd
 import openai
 from dotenv import load_dotenv
-import smtplib
-import ssl
-import os
-import time
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
 import chromedriver_autoinstaller
 from pyvirtualdisplay import Display
+import smtplib
+import ssl
+from email.message import EmailMessage
+from datetime import datetime
+
+# Changable Terms
+term = 'ai'
+summarizer = True
+sen_num = 6
+story_lim = 5
+latest = True
+
+# Loading essentials
 display = Display(visible=0, size=(800, 800))  
 display.start()
 
@@ -124,13 +134,8 @@ def summarize(pairs, sen_num):
         text = completion.choices[0].message.content.replace('\\n',' ').replace('TL;DR','').replace('TL;DR:',' ').replace('\n',' ').replace('TL:DR','').replace('TL:DR:','')
         summaries.append([i[0], text, i[2], i[3]])
     return summaries
-
-##### Main #####
-term = 'ai'
-summarizer = True
-sen_num = 6
-story_lim = 5
-latest = True
+   
+## Format for functions ## 
 ## scrape_links(url, xpath, selector)
 ## scrape_articles(links, xpath_title, xpath_text, selector, origin)
 
@@ -196,4 +201,34 @@ else:
   total = tc_pairs + fp_pairs + v_pairs + bi_pairs + at_pairs + w_pairs
 df = pd.DataFrame(total, columns=['Title', 'Text', 'Origin', 'Link'])
 df.to_csv('newssummaries.csv', index=False)
-print('done')
+
+# Email sending setup
+gmail_address = os.getenv("GMAIL_ADDRESS")
+gmail_password = os.getenv("GMAIL_PASSWORD")
+assert gmail_address and gmail_password, "Gmail credentials not loaded"
+
+date = datetime.now().strftime("%d-%m-%Y")
+subscriber_email_addresses = ['nossorc2@gmail.com']
+news_summaries = df
+
+html_content = f"<html><body><h1>Daily Tech News - {date}</h1><ul>"
+for _, row in news_summaries.iterrows():
+    html_content += f"<li><h3>{row['Title']}</h3><p>{row['Text']}</p><a href='{row['Link']}'>Read more</a><i>Source: {row['Origin']}</i></li><hr>"
+html_content += "</ul></body></html>"
+
+def send_email(to_address, content):
+    email = EmailMessage()
+    email["Subject"] = f"{date} - Daily Dose of {term} News"
+    email["From"] = gmail_address
+    email["To"] = to_address
+    email.add_alternative(content, subtype='html')
+    smtp_server.send_message(email)
+
+try:
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=ssl.create_default_context()) as smtp_server:
+        smtp_server.login(gmail_address, gmail_password)
+        for email in subscriber_email_addresses:
+            send_email(email, html_content)
+except Exception as e:
+    print(f"Error sending email: {e}")
+
