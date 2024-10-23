@@ -3,7 +3,7 @@ name: Daily newsletter workflow
 on:
   schedule:
     # Send the newsletter daily at 6:30 am.
-    - cron: '30 6 * * *'
+    - cron: '0 5 * * *'
   workflow_dispatch:
 
 jobs:
