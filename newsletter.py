@@ -55,9 +55,6 @@ html_content += '''
 # Add the HTML content to the email
 email.add_alternative(html_content, subtype='html')
 
-# Add a plain text fallback in case the email client doesn't support HTML
-email.set_content("Your email client does not support HTML. Please view this newsletter in an HTML-compatible client.")
-
 # List of subscribers
 subscriber_email_addresses = ['nossorc2@gmail.com']  # Add more email addresses as needed
 
