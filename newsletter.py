@@ -95,4 +95,5 @@ try:
 except Exception as e:
     print(f"An error occurred: {e}")
 
+print(html_content)
 print("Newsletter sending process completed.")
