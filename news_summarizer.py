@@ -14,7 +14,7 @@ from email.message import EmailMessage
 from datetime import datetime
 
 # Changable Terms
-term = 'ai'
+term = 'AI'
 summarizer = True
 sen_num = 6
 story_lim = 1
@@ -202,6 +202,56 @@ else:
 df = pd.DataFrame(total, columns=['Title', 'Text', 'Origin', 'Link'])
 df.to_csv('newssummaries.csv', index=False)
 
+def complete_missing_fields(row):
+    title = row['Title']
+    text = row['Text']
+
+    # If both 'Title' and 'Text' are missing, skip this row
+    if (title == "N/A" or pd.isna(title)) and (text == "N/A" or text == "No article" or pd.isna(text)):
+        return row
+
+    # If 'Title' is missing, generate a title based on the text
+    if (title == "N/A" or pd.isna(title)) and not (text == "N/A" or text == "No article" or pd.isna(text)):
+       try:
+          content = f"Generate a suitable title for the following article: {text}"
+          completion = openai.chat.completions.create(
+           messages=[
+               {
+                   "role": "user",
+                   "content": content,
+               }
+           ],
+           model="gpt-3.5-turbo",
+           )
+           
+           title = "Generated: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' '))
+          row['Title'] = title
+          except Exception as e:
+            print(f"Error generating title: {e}")
+
+    # If 'Text' is missing, generate the content based on the title
+    if (text == "N/A" or text == "No article" or pd.isna(text)) and not (title == "N/A" or pd.isna(title)):
+        content = f"Generate an article for the following title using the best and latest data you know: {title}"
+        try:
+            messages=[
+               {
+                   "role": "user",
+                   "content": content,
+               }
+           ],
+           model="gpt-3.5-turbo",
+           )
+           
+           text = "Generated: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' '))
+            row['Text'] = text
+        except Exception as e:
+            print(f"Error generating text: {e}")
+
+    return row
+
+# Fill missing titles or info with AI 
+df = df.apply(complete_missing_fields, axis=1)
+   
 # Email sending setup
 gmail_address = os.getenv("GMAIL_ADDRESS")
 gmail_password = os.getenv("GMAIL_PASSWORD")
