@@ -17,7 +17,7 @@ from datetime import datetime
 term = 'ai'
 summarizer = True
 sen_num = 6
-story_lim = 5
+story_lim = 1
 latest = True
 
 # Loading essentials
