@@ -2,8 +2,8 @@ name: Daily newsletter workflow
 
 on:
   schedule:
-    # Send the newsletter daily at 7:15 am.
-    - cron: '30 14 * * *'
+    # Send the newsletter daily at 6:30 am.
+    - cron: '30 6 * * *'
   workflow_dispatch:
 jobs:
   Query-And-Notification:
@@ -37,7 +37,6 @@ jobs:
           
 
         run: |
-          echo printenv
           echo "OpenAI API Key (masked): ${OPENAI_API_KEY: -4}"
           python news_summarizer.py
           python newsletter.py
