@@ -30,12 +30,13 @@ jobs:
       - name: Install xvfb
         run: sudo apt-get install xvfb
       - name: Send the newsletter to the subscribers
-        env: 
-          Name: 'news'
+        env:
           GMAIL_USERNAME: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
           OPENAI_API_KEY: ${{ secrets.OPENAI.API_KEY }}
+          
 
         run: |
+          echo "OpenAI API Key (masked): ${OPENAI_API_KEY: -4}"
           python news_summarizer.py
           python newsletter.py
