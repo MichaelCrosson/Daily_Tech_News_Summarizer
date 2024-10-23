@@ -23,7 +23,7 @@ jobs:
 
       - name: Send the newsletter to the subscribers
         env:
-          GMAIL_USERNAME: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
