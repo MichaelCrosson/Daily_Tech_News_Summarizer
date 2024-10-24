@@ -224,7 +224,7 @@ def complete_missing_fields(row):
            model="gpt-3.5-turbo",
            )
            
-        titler = str("Generated: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' ')))
+        titler = str("GENERATED: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' ')))
         row['Title'] = titler
       except Exception as e:
             print(f"Error generating title: {e}")
@@ -243,7 +243,7 @@ def complete_missing_fields(row):
           model="gpt-3.5-turbo",
           )
 
-          textr = str("Generated: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' ')))
+          textr = str("GENERATED: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' ')))
           row['Text'] = textr
         except Exception as e:
             print(f"Error generating text: {e}")
@@ -288,10 +288,11 @@ for index, row in news_summaries.iterrows():
 # Close the HTML content
 html_content += '''
     </ul>
+    <p><b><i>Psst</i><b> please support <a href="https://www.buymeacoffee.com/MichaelCrosson">here</a>here and reply if you want to be removed from this list.</p>
 </body>
 </html>
 '''
-
+ 
 def send_email(to_address, content):
     email = EmailMessage()
     email["Subject"] = f"{date} - Daily Dose of {term} News"
