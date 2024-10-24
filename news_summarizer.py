@@ -223,14 +223,13 @@ def complete_missing_fields(row):
            ],
            model="gpt-3.5-turbo",
            )
-           
         titler = str("GENERATED: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' ')))
         row['Title'] = titler
       except Exception as e:
             print(f"Error generating title: {e}")
 
     # If 'Text' is missing, generate the content based on the title
-    if (text == "N/A" or text == "No article." or pd.isna(text) or text == "") and not (title == "N/A" or pd.isna(title) or title == ""):
+    if (text == "N/A" or text == "No article." or pd.isna(text) or text == "" or text == "No article") and not (title == "N/A" or pd.isna(title) or title == ""):
         content = f"Generate a summation of an article in {sen_num} sentences for the following title using the best and latest data you know: {title}"
         try:
           completion = openai.chat.completions.create(
@@ -242,12 +241,10 @@ def complete_missing_fields(row):
            ],
           model="gpt-3.5-turbo",
           )
-
           textr = str("GENERATED: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' ')))
           row['Text'] = textr
         except Exception as e:
             print(f"Error generating text: {e}")
-
     return row
 
 # Fill missing titles or info with AI 
@@ -288,7 +285,7 @@ for index, row in news_summaries.iterrows():
 # Close the HTML content
 html_content += '''
     </ul>
-    <p><b><i>Psst</i><b> please support <a href="https://www.buymeacoffee.com/MichaelCrosson">here</a>here and reply if you want to be removed from this list.</p>
+    <p><b><i>Psst</i><b> please support <a href="https://www.buymeacoffee.com/MichaelCrosson">here</a> and reply if you want to be removed from this list.</p>
 </body>
 </html>
 '''
