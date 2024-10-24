@@ -16,8 +16,8 @@ from datetime import datetime
 # Changable Terms
 term = 'AI'
 summarizer = True
-sen_num = 6
-story_lim = 5
+sen_num = 5
+story_lim = 4
 latest = True
 
 # Loading essentials
@@ -284,8 +284,8 @@ for index, row in news_summaries.iterrows():
 
 # Close the HTML content
 html_content += '''
+      <p><b><i>Psst</i><b> please support <a href="https://www.buymeacoffee.com/MichaelCrosson">here</a> and reply if you want to be removed from this list.</p>
     </ul>
-    <p><b><i>Psst</i><b> please support <a href="https://www.buymeacoffee.com/MichaelCrosson">here</a> and reply if you want to be removed from this list.</p>
 </body>
 </html>
 '''
