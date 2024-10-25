@@ -1,4 +1,4 @@
-# News Summarizer
+# Tech News Summarizer
 
 ## Overview
 
