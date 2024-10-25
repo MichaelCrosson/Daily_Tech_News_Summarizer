@@ -86,11 +86,12 @@ def scrape_articles(links, xpath_title, xpath_text, selector, origin):
 
     title = 'N/A'
     for k in titles:
-      try: 
-        title = str(k.text)
-      except:
-        title = 'N/A'
-
+       if len(k.text) > 5: 
+         try: 
+           title = str(k.text)
+         except:
+           title = 'N/A'
+         
     textcorpus = []
     for j in text:
       try:
