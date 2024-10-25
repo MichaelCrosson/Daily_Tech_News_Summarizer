@@ -78,6 +78,7 @@ def scrape_articles(links, xpath_title, xpath_text, selector, origin):
       titles = driver.find_elements(selector, xpath_title)
     except:
        titles = 'Error'
+       
     try:
       text = driver.find_elements(selector, xpath_text)
     except:
@@ -159,10 +160,10 @@ if summarizer == True:
   fp_summaries = summarize(fp_pairs, sen_num)
 # print(fp_summaries)
 
-# Verge # not best
+# Verge # 
 termv = term.replace(" ", "+")
 verge_links = scrape_links(f"https://www.theverge.com/search?q={termv}", "//h2//a", "xpath")
-v_pairs = scrape_articles(verge_links[0:story_lim], "//h1[@class='inline font-polysans text-22 font-bold leading-110 md:text-33 lg:hidden']", "//div//p", 'xpath', 'Verge')
+v_pairs = scrape_articles(verge_links[0:story_lim], "//h1", "//div//p", 'xpath', 'Verge')
 if summarizer == True:
   v_summaries = summarize(v_pairs, sen_num)
 # print(v_summaries)
@@ -178,13 +179,13 @@ if summarizer == True:
   bi_summaries = summarize(bi_pairs, sen_num)
 # print(bi_summaries)
 
-# ArsTechnica # not best
-termat = term.replace(" ", "+")
-arstechnica_links = scrape_links(f"https://arstechnica.com/search/?q={termat}", "//div[@class='gs-title']//a", "xpath")
-at_pairs = scrape_articles(arstechnica_links[0:story_lim], "//h1[@class='mb-3 font-serif text-4xl font-bold text-gray-100 md:text-6xl md:leading-[1.05]']", "//div//p", 'xpath', 'ArsTechnica')
-if summarizer == True:
-  at_summaries = summarize(at_pairs, sen_num)
-# # print(at_summaries)
+# # ArsTechnica # not best
+# termat = term.replace(" ", "+")
+# arstechnica_links = scrape_links(f"https://arstechnica.com/search/?q={termat}", "//div[@class='gs-title']//a", "xpath")
+# at_pairs = scrape_articles(arstechnica_links[0:story_lim], "//h1[@class='mb-3 font-serif text-4xl font-bold text-gray-100 md:text-6xl md:leading-[1.05]']", "//div//p", 'xpath', 'ArsTechnica')
+# if summarizer == True:
+#   at_summaries = summarize(at_pairs, sen_num)
+# # # print(at_summaries)
 
 # Wired #
 termw = term.replace(" ", "+")
@@ -195,10 +196,11 @@ if summarizer == True:
 # print(w_summaries)
 
 # Getting csv
+# + at_summaries + at_pairs 
 if summarizer == True:
-  total = tc_summaries + fp_summaries + v_summaries + bi_summaries + at_summaries + w_summaries
+  total = tc_summaries + fp_summaries + v_summaries + bi_summaries + w_summaries
 else:
-  total = tc_pairs + fp_pairs + v_pairs + bi_pairs + at_pairs + w_pairs
+  total = tc_pairs + fp_pairs + v_pairs + bi_pairs + w_pairs
 df = pd.DataFrame(total, columns=['Title', 'Text', 'Origin', 'Link'])
 df.to_csv('newssummaries.csv', index=False)
 
