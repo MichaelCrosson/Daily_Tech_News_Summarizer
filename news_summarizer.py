@@ -300,7 +300,7 @@ for index, row in news_summaries.iterrows():
 
 # Close the HTML content
 html_content += '''
-      <p><b><i>Psst</i><b> please support <a href="https://www.buymeacoffee.com/MichaelCrosson">here</a> and reply if you want to be removed from this list.</p>
+      <p><b><i>Psst</i><b> please support <a href="https://www.buymeacoffee.com/MichaelCrosson">here</a> | <a href="https://michaelcrosson.github.io/subscribe.html">unsubscribe</a>.</p>
     </ul>
 </body>
 </html>
