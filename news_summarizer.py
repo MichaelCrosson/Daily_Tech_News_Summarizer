@@ -15,6 +15,7 @@ from datetime import datetime
 
 # Changable Terms
 term = 'AI'
+term2 = 'Tech'
 summarizer = True
 sen_num = 5
 story_lim = 4
@@ -153,6 +154,18 @@ if summarizer == True:
   tc_summaries = summarize(tc_pairs, sen_num)
 # print(tc_summaries)
 
+# Tech Crunch2 # term2
+if latest != True:
+  termtc2 = term2.replace(" ", "+")
+  techurl2 = f"https://techcrunch.com/?s={termtc2}"
+else: 
+  techurl2 = "https://techcrunch.com/latest/"
+techcrunch_links2 = scrape_links(techurl2, "//h3//a[@href]", 'xpath')
+tc_pairs2 = scrape_articles(techcrunch_links2[0:story_lim], "//h1[@class='article-hero__title wp-block-post-title']", "//p", "xpath", 'TechCrunch')
+if summarizer == True:
+  tc_summaries2 = summarize(tc_pairs2, sen_num)
+# print(tc_summaries)
+
 # Firstpost # 
 termfp = term.replace(" ", "%20")
 firstpost_links = scrape_links(f"https://www.firstpost.com/search/?query={termfp}", "a.jsx-235a319a3b55c7b5.str-ln", By.CSS_SELECTOR)
@@ -199,7 +212,7 @@ if summarizer == True:
 # Getting csv
 # + at_summaries + at_pairs 
 if summarizer == True:
-  total = tc_summaries + fp_summaries + v_summaries + bi_summaries + w_summaries
+  total = tc_summaries + tc_summaries2 + fp_summaries + v_summaries + bi_summaries + w_summaries
 else:
   total = tc_pairs + fp_pairs + v_pairs + bi_pairs + w_pairs
 df = pd.DataFrame(total, columns=['Title', 'Text', 'Origin', 'Link'])
