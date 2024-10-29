@@ -154,18 +154,6 @@ if summarizer == True:
   tc_summaries = summarize(tc_pairs, sen_num)
 # print(tc_summaries)
 
-# Tech Crunch2 # term2
-if latest != True:
-  termtc2 = term2.replace(" ", "+")
-  techurl2 = f"https://techcrunch.com/?s={termtc2}"
-else: 
-  techurl2 = "https://techcrunch.com/latest/"
-techcrunch_links2 = scrape_links(techurl2, "//h3//a[@href]", 'xpath')
-tc_pairs2 = scrape_articles(techcrunch_links2[0:story_lim], "//h1[@class='article-hero__title wp-block-post-title']", "//p", "xpath", 'TechCrunch')
-if summarizer == True:
-  tc_summaries2 = summarize(tc_pairs2, sen_num)
-# print(tc_summaries)
-
 # Firstpost # 
 termfp = term.replace(" ", "%20")
 firstpost_links = scrape_links(f"https://www.firstpost.com/search/?query={termfp}", "a.jsx-235a319a3b55c7b5.str-ln", By.CSS_SELECTOR)
