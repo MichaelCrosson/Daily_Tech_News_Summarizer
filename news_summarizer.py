@@ -200,7 +200,7 @@ if summarizer == True:
 # Getting csv
 # + at_summaries + at_pairs 
 if summarizer == True:
-  total = tc_summaries + tc_summaries2 + fp_summaries + v_summaries + bi_summaries + w_summaries
+  total = tc_summaries + fp_summaries + v_summaries + bi_summaries + w_summaries
 else:
   total = tc_pairs + fp_pairs + v_pairs + bi_pairs + w_pairs
 df = pd.DataFrame(total, columns=['Title', 'Text', 'Origin', 'Link'])
