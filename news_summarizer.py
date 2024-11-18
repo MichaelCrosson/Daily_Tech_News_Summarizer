@@ -87,7 +87,7 @@ def scrape_articles(links, xpath_title, xpath_text, selector, origin):
 
     title = 'N/A'
     for k in titles:
-       if k.istype(str):
+       if type(k) == str:
           title = k
        else:
           if len(k.text) > 5: 
