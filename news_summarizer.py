@@ -113,7 +113,9 @@ def scrape_articles(links, xpath_title, xpath_text, selector, origin):
   return pairs
 
 ### Summarizer ###
-def summarize(pairs, sen_num):
+import openai
+
+def summarize_large(pairs, sen_num):
     summaries = []
     for i in pairs:
         content = f"""
