@@ -113,8 +113,6 @@ def scrape_articles(links, xpath_title, xpath_text, selector, origin):
   return pairs
 
 ### Summarizer ###
-import openai
-
 def summarize(pairs, sen_num):
     summaries = []
     for i in pairs:
@@ -131,7 +129,7 @@ def summarize(pairs, sen_num):
         try:
             # Check and split the input if necessary
             tokens_estimate = len(content.split())  # Rough estimate of token count
-            if tokens_estimate > 3500:  # Assume GPT models struggle above ~3500 input tokens
+            if tokens_estimate > 3500: 
                 # Split the article into chunks
                 chunks = split_text_into_chunks(i[1], max_chunk_size=3000)  # Define max chunk size based on token capacity
                 summary_chunks = []
@@ -142,14 +140,14 @@ def summarize(pairs, sen_num):
                     title: {i[0]}
                     article: {chunk}
                     """
-                    chunk_completion = openai.chat.completion.create(
+                    chunk_completion = openai.chat.completions.create(
                         messages=[
                             {
                                 "role": "user",
                                 "content": chunk_content,
                             }
                         ],
-                        model="gpt-4-turbo-32k",  # Use the larger model
+                        model="gpt-4-turbo-32k", 
                     )
                     summary_chunk = chunk_completion.choices[0].message.content.strip()
                     summary_chunks.append(summary_chunk)
@@ -162,7 +160,7 @@ def summarize(pairs, sen_num):
                 Summarize the following combined summaries into {sen_num} sentences:
                 {combined_summary}
                 """
-                final_completion = openai.chat.completion.create(
+                final_completion = openai.chat.completions.create(
                     messages=[
                         {
                             "role": "user",
@@ -174,7 +172,7 @@ def summarize(pairs, sen_num):
                 final_summary = final_completion.choices[0].message.content.strip()
             else:
                 # Process directly if content fits
-                completion = openai.chat.completion.create(
+                completion = openai.chat.completions.create(
                     messages=[
                         {
                             "role": "user",
