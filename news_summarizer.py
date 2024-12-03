@@ -142,7 +142,7 @@ def summarize(pairs, sen_num):
                     title: {i[0]}
                     article: {chunk}
                     """
-                    chunk_completion = openai.ChatCompletion.create(
+                    chunk_completion = openai.chat.completion.create(
                         messages=[
                             {
                                 "role": "user",
@@ -162,7 +162,7 @@ def summarize(pairs, sen_num):
                 Summarize the following combined summaries into {sen_num} sentences:
                 {combined_summary}
                 """
-                final_completion = openai.ChatCompletion.create(
+                final_completion = openai.chat.completion.create(
                     messages=[
                         {
                             "role": "user",
@@ -174,7 +174,7 @@ def summarize(pairs, sen_num):
                 final_summary = final_completion.choices[0].message.content.strip()
             else:
                 # Process directly if content fits
-                completion = openai.ChatCompletion.create(
+                completion = openai.chat.completion.create(
                     messages=[
                         {
                             "role": "user",
