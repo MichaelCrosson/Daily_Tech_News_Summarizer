@@ -117,7 +117,7 @@ def summarize(pairs, sen_num):
     summaries = []
     for i in pairs:
         content = f"""
-        Summarize the following information in a concise format with at least {sen_num} sentences 
+        Summarize the following information in a concise format with about {sen_num} sentences 
         for easier consumption. Do not include the term TL:DR in the final output. 
         If nothing is given, reply with "No article".
         Do not repeat the title of the text. Fix all grammar and syntax errors from the input if applicable.
@@ -190,17 +190,13 @@ def summarize(pairs, sen_num):
     return summaries
 
 def split_text_into_chunks(text, max_chunk_size=3000):
-    """
-    Split text into chunks of a specified maximum token size.
-    Adjusts for spaces and maintains full sentences when possible.
-    """
     words = text.split()
     chunks = []
     current_chunk = []
     current_length = 0
 
     for word in words:
-        if current_length + len(word) + 1 <= max_chunk_size:  # +1 for space
+        if current_length + len(word) + 1 <= max_chunk_size: 
             current_chunk.append(word)
             current_length += len(word) + 1
         else:
@@ -208,7 +204,6 @@ def split_text_into_chunks(text, max_chunk_size=3000):
             current_chunk = [word]
             current_length = len(word) + 1
 
-    # Add the last chunk
     if current_chunk:
         chunks.append(" ".join(current_chunk))
 
@@ -230,13 +225,13 @@ if summarizer == True:
   tc_summaries = summarize(tc_pairs, sen_num)
 # print(tc_summaries)
 
-# Firstpost # 
-termfp = term.replace(" ", "%20")
-firstpost_links = scrape_links(f"https://www.firstpost.com/search/?query={termfp}", "a.jsx-235a319a3b55c7b5.str-ln", By.CSS_SELECTOR)
-fp_pairs = scrape_articles(firstpost_links[0:story_lim], "//h1[@class='art-sec-ttl literatafont']", "//div[@class='main-dtls-wrap max-dtls-width formobilereadmore noredmoreforliveblog adcls']", "xpath", 'Firstpost')
-if summarizer == True:
-  fp_summaries = summarize(fp_pairs, sen_num)
-# print(fp_summaries)
+# # Firstpost # 
+# termfp = term.replace(" ", "%20")
+# firstpost_links = scrape_links(f"https://www.firstpost.com/search/?query={termfp}", "a.jsx-235a319a3b55c7b5.str-ln", By.CSS_SELECTOR)
+# fp_pairs = scrape_articles(firstpost_links[0:story_lim], "//h1[@class='art-sec-ttl literatafont']", "//div[@class='main-dtls-wrap max-dtls-width formobilereadmore noredmoreforliveblog adcls']", "xpath", 'Firstpost')
+# if summarizer == True:
+#   fp_summaries = summarize(fp_pairs, sen_num)
+# # print(fp_summaries)
 
 # Verge # 
 termv = term.replace(" ", "+")
@@ -276,7 +271,7 @@ if summarizer == True:
 # Getting csv
 # + at_summaries + at_pairs 
 if summarizer == True:
-  total = tc_summaries + fp_summaries + v_summaries + bi_summaries + w_summaries
+  total = tc_summaries + v_summaries + bi_summaries + w_summaries
 else:
   total = tc_pairs + fp_pairs + v_pairs + bi_pairs + w_pairs
 df = pd.DataFrame(total, columns=['Title', 'Text', 'Origin', 'Link'])
