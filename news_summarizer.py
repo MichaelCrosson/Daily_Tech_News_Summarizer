@@ -147,7 +147,7 @@ def summarize(pairs, sen_num):
                                 "content": chunk_content,
                             }
                         ],
-                        model="gpt-4-turbo-32k", 
+                        model="gpt-4-turbo", 
                     )
                     summary_chunk = chunk_completion.choices[0].message.content.strip()
                     summary_chunks.append(summary_chunk)
@@ -167,7 +167,7 @@ def summarize(pairs, sen_num):
                             "content": final_summary_content,
                         }
                     ],
-                    model="gpt-4-turbo-32k",
+                    model="gpt-4-turbo",
                 )
                 final_summary = final_completion.choices[0].message.content.strip()
             else:
@@ -179,7 +179,7 @@ def summarize(pairs, sen_num):
                             "content": content,
                         }
                     ],
-                    model="gpt-4-turbo-32k",
+                    model="gpt-4-turbo",
                 )
                 final_summary = completion.choices[0].message.content.strip()
 
@@ -301,7 +301,7 @@ def complete_missing_fields(row):
                    "content": content,
                }
            ],
-           model="gpt-3.5-turbo",
+           model="gpt-4-turbo",
            )
         titler = str("GENERATED: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' ')))
         row['Title'] = titler
@@ -319,7 +319,7 @@ def complete_missing_fields(row):
                    "content": content,
                }
            ],
-          model="gpt-3.5-turbo",
+          model="gpt-4-turbo",
           )
           textr = str("GENERATED: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' ')))
           row['Text'] = textr
