@@ -126,88 +126,19 @@ def summarize(pairs, sen_num):
         article: {i[1]}
         """
 
-        try:
-            # Check and split the input if necessary
-            tokens_estimate = len(content.split())  # Rough estimate of token count
-            if tokens_estimate > 3500: 
-                # Split the article into chunks
-                chunks = split_text_into_chunks(i[1], max_chunk_size=3000)  # Define max chunk size based on token capacity
-                summary_chunks = []
-                
-                for chunk in chunks:
-                    chunk_content = f"""
-                    Summarize the following text. Do not repeat the title of the text. Capture key points:
-                    title: {i[0]}
-                    article: {chunk}
-                    """
-                    chunk_completion = openai.chat.completions.create(
-                        messages=[
-                            {
-                                "role": "user",
-                                "content": chunk_content,
-                            }
-                        ],
-                        model="gpt-4-turbo", 
-                    )
-                    summary_chunk = chunk_completion.choices[0].message.content.strip()
-                    summary_chunks.append(summary_chunk)
-                
-                # Combine the summarized chunks
-                combined_summary = " ".join(summary_chunks)
-
-                # Summarize the combined result if needed to fit sen_num
-                final_summary_content = f"""
-                Summarize the following combined summaries into {sen_num} sentences:
-                {combined_summary}
-                """
-                final_completion = openai.chat.completions.create(
-                    messages=[
-                        {
-                            "role": "user",
-                            "content": final_summary_content,
-                        }
-                    ],
-                    model="gpt-4-turbo",
-                )
-                final_summary = final_completion.choices[0].message.content.strip()
-            else:
-                # Process directly if content fits
-                completion = openai.chat.completions.create(
-                    messages=[
-                        {
-                            "role": "user",
-                            "content": content,
-                        }
-                    ],
-                    model="gpt-4-turbo",
-                )
-                final_summary = completion.choices[0].message.content.strip()
-
-            summaries.append([i[0], final_summary, i[2], i[3]])
-        except Exception as e:
-            summaries.append([i[0], f"Error: {str(e)}", i[2], i[3]])
-    
+        completion = openai.chat.completions.create(
+                 messages=[
+                     {
+                         "role": "user",
+                         "content": content,
+                     }
+                 ],
+                 model="gpt-4-turbo",
+             )
+         final_summary = completion.choices[0].message.content.strip()
+         summaries.append([i[0], final_summary, i[2], i[3]])
+       
     return summaries
-
-def split_text_into_chunks(text, max_chunk_size=3000):
-    words = text.split()
-    chunks = []
-    current_chunk = []
-    current_length = 0
-
-    for word in words:
-        if current_length + len(word) + 1 <= max_chunk_size: 
-            current_chunk.append(word)
-            current_length += len(word) + 1
-        else:
-            chunks.append(" ".join(current_chunk))
-            current_chunk = [word]
-            current_length = len(word) + 1
-
-    if current_chunk:
-        chunks.append(" ".join(current_chunk))
-
-    return chunks
    
 ## Format for functions ## 
 ## scrape_links(url, xpath, selector)
