@@ -135,8 +135,8 @@ def summarize(pairs, sen_num):
                  ],
                  model="gpt-4-turbo",
              )
-         final_summary = completion.choices[0].message.content.strip()
-         summaries.append([i[0], final_summary, i[2], i[3]])
+      final_summary = completion.choices[0].message.content.strip()
+      summaries.append([i[0], final_summary, i[2], i[3]])
        
     return summaries
    
