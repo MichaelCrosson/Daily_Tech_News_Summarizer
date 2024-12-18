@@ -157,13 +157,13 @@ if summarizer == True:
   tc_summaries = summarize(tc_pairs, sen_num)
 # print(tc_summaries)
 
-# # Firstpost # 
-# termfp = term.replace(" ", "%20")
-# firstpost_links = scrape_links(f"https://www.firstpost.com/search/?query={termfp}", "a.jsx-235a319a3b55c7b5.str-ln", By.CSS_SELECTOR)
-# fp_pairs = scrape_articles(firstpost_links[0:story_lim], "//h1[@class='art-sec-ttl literatafont']", "//div[@class='main-dtls-wrap max-dtls-width formobilereadmore noredmoreforliveblog adcls']", "xpath", 'Firstpost')
-# if summarizer == True:
-#   fp_summaries = summarize(fp_pairs, sen_num)
-# # print(fp_summaries)
+# Firstpost # 
+termfp = term.replace(" ", "%20")
+firstpost_links = scrape_links(f"https://www.firstpost.com/search/?query={termfp}", "a.jsx-235a319a3b55c7b5.str-ln", By.CSS_SELECTOR)
+fp_pairs = scrape_articles(firstpost_links[0:story_lim], "//h1[@class='art-sec-ttl literatafont']", "//div[@class='main-dtls-wrap max-dtls-width formobilereadmore noredmoreforliveblog adcls']", "xpath", 'Firstpost')
+if summarizer == True:
+  fp_summaries = summarize(fp_pairs, sen_num)
+# print(fp_summaries)
 
 # Verge # 
 termv = term.replace(" ", "+")
