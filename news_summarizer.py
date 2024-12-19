@@ -133,7 +133,7 @@ def summarize(pairs, sen_num):
                          "content": content,
                      }
                  ],
-                 model="gpt-4-turbo",
+                 model="gpt-3.5-turbo",
              )
 
         final_summary = completion.choices[0].message.content.strip()
@@ -203,7 +203,7 @@ if summarizer == True:
 # Getting csv
 # + at_summaries + at_pairs 
 if summarizer == True:
-  total = tc_summaries + v_summaries + bi_summaries + w_summaries
+  total = tc_summaries + v_summaries + bi_summaries + w_summaries + fp_pairs 
 else:
   total = tc_pairs + fp_pairs + v_pairs + bi_pairs + w_pairs
 df = pd.DataFrame(total, columns=['Title', 'Text', 'Origin', 'Link'])
@@ -228,7 +228,7 @@ def complete_missing_fields(row):
                    "content": content,
                }
            ],
-           model="gpt-4-turbo",
+           model="gpt-3.5-turbo",
            )
         titler = str("GENERATED: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' ')))
         row['Title'] = titler
@@ -246,7 +246,7 @@ def complete_missing_fields(row):
                    "content": content,
                }
            ],
-          model="gpt-4-turbo",
+          model="gpt-3.5-turbo",
           )
           textr = str("GENERATED: " + (completion.choices[0].message.content.replace('\\n',' ').replace('\n',' ')))
           row['Text'] = textr
