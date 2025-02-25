@@ -2,7 +2,7 @@
 
 ## Overview
 
-The News Summarizer is a Python-based tool that scrapes articles from leading tech news websites and provides concise summaries using the ChatGPT API. The script currently fetches articles related to the search term "AI" from the following sources:
+The News Summarizer is a Python-based tool that scrapes articles from leading tech news websites and provides concise summaries using the ChatGPT API. The script currently fetches articles related to the search term "AI" from the following sources (not all are active):
 - **Tech Crunch**
 - **FirstPost**
 - **The Verge**
