@@ -264,7 +264,7 @@ assert gmail_address and gmail_password, "Gmail credentials not loaded"
 
 date = datetime.now().strftime("%d-%m-%Y")
 # subscriber_email_addresses = ['nossorc2@gmail.com']
-subscriber_email_addresses = ['nossorc2@gmail.com', 'boyuan.lu22@gmail.com', 'Wilson.huahung@gmail.com']
+subscriber_email_addresses = ['crosson.a.michael@gmail.com']
 news_summaries = df
 
 # Build the newsletter HTML content
@@ -313,4 +313,5 @@ try:
             send_email(email, html_content)
 except Exception as e:
     print(f"Error sending email: {e}")
+
 
