@@ -260,7 +260,7 @@ df = df.apply(complete_missing_fields, axis=1)
 # Email sending setup
 gmail_address = os.getenv("GMAIL_ADDRESS")
 gmail_password = os.getenv("GMAIL_PASSWORD")
-assert gmail_address and gmail_password, "Gmail credentials not loaded"
+assert gmail_address and gmail_password, "Gmail credentials not loaded."
 
 date = datetime.now().strftime("%d-%m-%Y")
 # subscriber_email_addresses = ['nossorc2@gmail.com']
@@ -292,7 +292,7 @@ for index, row in news_summaries.iterrows():
 
 # Close the HTML content
 html_content += '''
-      <p><b><i>Psst</i><b> please support <a href="https://www.buymeacoffee.com/MichaelCrosson">here</a> | <a href="https://michaelcrosson.github.io/subscribe.html">unsubscribe</a>.</p>
+      <p><b><i>Psst</i><b> please support <a href="https://www.buymeacoffee.com/MichaelCrosson">here</a></p>
     </ul>
 </body>
 </html>
@@ -313,5 +313,6 @@ try:
             send_email(email, html_content)
 except Exception as e:
     print(f"Error sending email: {e}")
+
 
 
