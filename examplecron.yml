@@ -1,0 +1,30 @@
+name: Daily newsletter workflow
+
+on:
+  schedule:
+    # Send the newsletter daily at 5 am.
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+
+jobs:
+  Query-And-Notification:
+    runs-on: ubuntu-latest
+    environment: news
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install python-dotenv pandas openai selenium chromedriver-autoinstaller pyvirtualdisplay
+
+      - name: Send the newsletter to the subscribers
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python news_summarizer.py
